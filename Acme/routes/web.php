@@ -15,5 +15,13 @@ Route::get('/proyectos', function () {
     return view('proyectos');
 });
 
+Route::get('/clientes', function () {
+    return view('clientes');
+});
+
+Route::get('/arquitectos', function () {
+    return view('arquitectos');
+});
+
 
 

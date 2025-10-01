@@ -23,5 +23,8 @@ Route::get('/arquitectos', function () {
     return view('arquitectos');
 });
 
+Route::get('/planos', function () {
+    return view('planos');
+});
 
 

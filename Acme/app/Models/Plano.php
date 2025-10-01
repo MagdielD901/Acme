@@ -9,7 +9,7 @@ class Plano extends Model
     protected $table = 'planos';
     protected $primaryKey = 'idPlano';
 
-    protected $fillable = [
+    protected $fillable = [ 
         'idProyecto',
         'nombre',
         'descripcion',

@@ -6,6 +6,7 @@
     <title>Planos</title>
 </head>
 <body>
+
     
 @include('layouts.plano')
 

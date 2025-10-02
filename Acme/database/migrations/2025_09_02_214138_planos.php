@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->text('descripcion')->nullable();
             $table->date('fecha_creacion')->nullable();
-            $table->integer('hoja')->nullable();
+           $table->string('hoja')->nullable();
             $table->timestamps();
         
             // Foreign key
-            $table->foreign('idProyecto')->references('idProyecto')->on('proyectos')->onDelete('cascade');
+          //  $table->foreign('idProyecto')->references('idProyecto')->on('proyectos')->onDelete('cascade');
         });
         
     }

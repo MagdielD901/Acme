@@ -62,54 +62,82 @@
       </div>
       <div class="modal-body">
 
-      <form class="row g-3">
+     <form action="{{ route('planos.store') }}" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+  @csrf
+  
   <!-- Nombre del plano -->
   <div class="col-md-6">
-    <label for="validationServer01" class="form-label">Nombre del plano</label>
-    <input type="text" class="form-control is-valid" id="validationServer01" required>
-    <div class="valid-feedback">
-      ¡Se ve bien!
+    <label for="validationNombrePlano" class="form-label">Nombre del plano</label>
+    <input type="text" class="form-control" id="validationNombrePlano" name="nombre" required>
+    <div class="invalid-feedback">
+      Por favor coloque un nombre del plano.
     </div>
   </div>
 
   <!-- Descripción -->
   <div class="col-md-6">
-    <label for="validationServer03" class="form-label">Descripción</label>
-    <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-    <div id="validationServer03Feedback" class="invalid-feedback">
+    <label for="validationDescripcion" class="form-label">Descripción</label>
+    <input type="text" class="form-control" id="validationDescripcion" name="descripcion" required>
+    <div class="invalid-feedback">
       Por favor coloque una descripción.
     </div>
   </div>
 
-  <!-- Subir archivo -->
-  <div class="col-md-6">
-    <label for="uploadFile" class="form-label">Subir Plano</label>
-    <input type="file" class="form-control" id="uploadFile" required>
-    <div class="invalid-feedback">
-      Por favor seleccione un archivo.
-    </div>
+ <!-- Subir archivo -->
+<div class="col-md-6">
+  <label for="uploadFile" class="form-label">Subir Plano</label>
+  <input type="file" class="form-control" id="uploadFile" name="archivo" 
+         accept=".pdf,.jpg,.jpeg,.png" required>
+  
+  <small class="form-text text-muted">
+    <i class="fas fa-info-circle"></i> Formatos permitidos: 
+    <span class="text-success fw-bold">PDF, JPG, PNG</span> — Máx: <span class="text-danger">2 MB</span>
+  </small>
+
+  <div class="invalid-feedback">
+    Por favor seleccione un archivo válido.
   </div>
+</div>
+
 
   <!-- Fecha -->
   <div class="col-md-6">
-    <label for="fecha" class="form-label">Fecha</label>
-    <input type="date" class="form-control" id="fecha" required>
+    <label for="fecha" class="form-label">Fecha Creación</label>
+    <input type="date" class="form-control" id="fecha" name="fecha_creacion" required>
     <div class="invalid-feedback">
       Por favor seleccione una fecha.
     </div>
   </div>
 
- 
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    <button class="btn btn-primary" type="submit">Guardar</button>
+  </div>
 </form>
 
 
+<!-- Script de validación Bootstrap -->
+<script>
+  // Bootstrap 5 custom validation
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
 
-        
+
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-      </div>
+    
     </div>
   </div>
 </div>
@@ -119,6 +147,14 @@
 
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
+
+       @if(session('success'))
+    <div class="alert alert-success" id="success-message">
+        {{ session('success') }}
+    </div>
+@endif
+
+
            
 
                 <table class="table align-items-center mb-0">
@@ -131,176 +167,55 @@
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../Panel/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Plano casa</h6>
-                            <p class="text-xs text-secondary mb-0">ID: 1</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Descripción</p>
-                        <p class="text-xs text-secondary mb-0">Organization</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Descargar</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../Panel/assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user2">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../Panel/assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user3">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Executive</p>
-                        <p class="text-xs text-secondary mb-0">Projects</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../Panel/assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user4">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../Panel/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user5">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Executive</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../Panel/assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user6">
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                      </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
+
+                 <tbody>
+  @forelse($planos as $plano)
+    <tr>
+      <td>
+        <div class="d-flex px-2 py-1">
+          <div>
+            <img src="{{ asset('Panel/assets/img/planos-icon.png') }}" class="avatar avatar-sm me-3" alt="plano">
+          </div>
+          <div class="d-flex flex-column justify-content-center">
+            <h6 class="mb-0 text-sm">{{ $plano->nombre }}</h6>
+            <p class="text-xs text-secondary mb-0">ID: {{ $plano->idPlano }}</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="text-xs text-secondary mb-0">{{ $plano->descripcion }}</p>
+      </td>
+
+<td class="align-middle text-center text-sm">
+  <a href="{{ asset('storage/' . $plano->hoja) }}" 
+     class="badge badge-sm bg-gradient-success" 
+     target="_blank">
+    Descargar
+  </a>
+</td>
+
+<td class="align-middle text-center text-sm">
+  <span class="text-secondary text-xs font-weight-bold">
+    {{ $plano->fecha_creacion }}
+  </span>
+</td>
+
+
+
+      <td class="align-middle">
+        <a href="javascript:;" class="text-secondary font-weight-bold text-xs">
+          Editar
+        </a>
+      </td>
+    </tr>
+  @empty
+    <tr>
+      <td colspan="5" class="text-center">No hay planos registrados</td>
+    </tr>
+  @endforelse
+</tbody>
+
+
                 </table>
               </div>
             </div>
@@ -398,5 +313,18 @@
 
   <!-- Control Center for Soft Dashboard -->
   <script src="{{ asset('Panel/assets/js/soft-ui-dashboard.min.js?v=1.1.0') }}"></script>
+
+  <script>
+  setTimeout(() => {
+    const msg = document.getElementById('success-message');
+    if (msg) {
+        msg.style.transition = "opacity 0.5s ease";
+        msg.style.opacity = 0;
+        setTimeout(() => msg.remove(), 500);
+    }
+}, 3000);
+
+</script>
+
 </body>
 </html>
